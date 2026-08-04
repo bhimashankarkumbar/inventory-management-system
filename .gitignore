@@ -1,0 +1,8 @@
+backend/src/main/resources/application.properties
+# Maven build output
+backend/target/
+
+# IDE files (optional but recommended)
+.idea/
+.vscode/
+*.iml
