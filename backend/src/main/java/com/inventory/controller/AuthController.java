@@ -28,15 +28,26 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody RegisterRequest request) {
-        User user = userService.registerUser(
-                request.getFullName(),
-                request.getEmail(),
-                request.getPassword(),
-                request.getRole()
-        );
-        return ResponseEntity.ok(user);
-    }
+public ResponseEntity<User> register(@RequestBody RegisterRequest request) {
+    User user = userService.registerUser(
+            request.getFullName(),
+            request.getEmail(),
+            request.getPassword(),
+            User.Role.STAFF
+    );
+    return ResponseEntity.ok(user);
+}
+
+@PostMapping("/register-privileged")
+public ResponseEntity<User> registerPrivileged(@RequestBody RegisterRequest request) {
+    User user = userService.registerUser(
+            request.getFullName(),
+            request.getEmail(),
+            request.getPassword(),
+            request.getRole()
+    );
+    return ResponseEntity.ok(user);
+}
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
