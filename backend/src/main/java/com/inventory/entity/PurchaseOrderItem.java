@@ -5,36 +5,37 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user")
+@Table(name = "purchase_order_item")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class PurchaseOrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "full_name", nullable = false, length = 100)
-    private String fullName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "purchase_order_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private PurchaseOrder purchaseOrder;
 
-    @Column(nullable = false, unique = true, length = 150)
-    private String email;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Product product;
 
-    @Column(name = "password_hash", nullable = false)
-    @com.fasterxml.jackson.annotation.JsonIgnore
-    private String passwordHash;
+    @Column(name = "quantity_ordered", nullable = false)
+    private Integer quantityOrdered;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private Role role;
-
-    @Column(name = "is_active", nullable = false)
-    private Boolean isActive = true;
+    @Column(name = "unit_price", precision = 10, scale = 2)
+    private BigDecimal unitPrice;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -51,9 +52,5 @@ public class User {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
-    }
-
-    public enum Role {
-        ADMIN, MANAGER, STAFF
     }
 }
