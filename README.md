@@ -4,6 +4,12 @@ A full-stack inventory management system built with **Spring Boot**, **Spring Se
 
 > This is a V1, deliberately scoped-down system. See [Design Decisions](#design-decisions) and [Roadmap](#roadmap--v2) for what was intentionally left out and why.
 
+## Screenshots
+
+![Login](docs/image.png)
+
+![Products](docs/image-1.png)
+
 ---
 
 ## Table of Contents
